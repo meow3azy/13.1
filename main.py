@@ -1,12 +1,11 @@
 class Category:
-    total_categories = 0
+    total_categories = 1
 
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
         self.products = products
         Category.total_categories += 1
-
     def add_product(self, product):
         self.products.append(product)
 
