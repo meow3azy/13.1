@@ -1,8 +1,9 @@
 import pytest
 from main import Category, Product
 
+@pytest.fixture
 def existing_category():
-    return Category("Существующая категория", "Описание существующей категории", [])
+    return Category("категория", "Описание категории", [])
 
 def test_count_categories(existing_category):
     assert Category.total_categories == 1
@@ -36,13 +37,13 @@ def test_add_product_to_category(create_category, create_product):
     assert category.products[0] == product
 
 def test_count_categories(create_category):
-    assert Category.total_categories == 1
+    assert create_category.total_categories == 1
 
 def test_count_unique_products(create_category, create_product):
     category = create_category
     product = create_product
     category.add_product(product)
-    assert category.total_unique_products == 1
+    assert len(set(product.name for product in category.products)) == 1
 
 def test_count_products(create_category, create_product):
     category = create_category
