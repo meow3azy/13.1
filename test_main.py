@@ -4,8 +4,10 @@ from main import Category, Product
 @pytest.fixture
 def existing_category():
     return Category("Название категории", "Описание категории", [])
+
 def test_count_categories(existing_category):
-    assert existing_category.total_categories == 1
+    assert Category.total_categories == 1
+
 @pytest.fixture
 def create_category():
     return Category("Название категории", "Описание категории", [])
@@ -34,14 +36,13 @@ def test_add_product_to_category(create_category, create_product):
     assert len(category.products) == 1
     assert category.products[0] == product
 
-def test_count_categories():
-    assert Category.total_categories == 1
-
 def test_count_unique_products(create_category, create_product):
     category = create_category
     product = create_product
+    initial_unique_products = Category.total_unique_products
     category.add_product(product)
-    assert len(set(product.name for product in category.products)) == 1
+    assert Category.total_unique_products == initial_unique_products + 1
+
 
 def test_count_products(create_category, create_product):
     category = create_category
